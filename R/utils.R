@@ -43,21 +43,20 @@ read_csv <- function(file = NULL, dec)
   }
 }
 
-# write_csv --------------------------------------------------------------------
+# str_remove_all ---------------------------------------------------------------
 
-#' write csv file, e.g. simulation result table
+#' Remove All Substrings Matching the Pattern
 #'
-#' @param data dataframe to be written
-#' @param outdir directory to save data
-#' @param filename filename to save data
-#' @param dec decimal separator
+#' @param x vector of character
+#' @param pattern regular expression agains which the strings in \code{x} are
+#'   matched
+#' @return \code{x} with elements in which substrings matching the
+#'   \code{pattern} are removed
 #' @export
 #'
-write_csv <- function(data, outdir, filename, dec) {
-  utils::write.table(
-    data, file.path(outdir, filename),
-    quote = FALSE, row.names = FALSE, col.names = TRUE, sep = ";", dec = dec
-  )
+str_remove_all <- function(x, pattern) {
+  #stringr::str_remove_all(x, pattern = pattern)
+  gsub(pattern, "", x)
 }
 
 # translate_data ---------------------------------------------------------------
@@ -131,18 +130,19 @@ use_spec_chars <- function(x) {
   result
 }
 
-# str_remove_all ---------------------------------------------------------------
+# write_csv --------------------------------------------------------------------
 
-#' Remove All Substrings Matching the Pattern
+#' write csv file, e.g. simulation result table
 #'
-#' @param x vector of character
-#' @param pattern regular expression agains which the strings in \code{x} are
-#'   matched
-#' @return \code{x} with elements in which substrings matching the
-#'   \code{pattern} are removed
+#' @param data dataframe to be written
+#' @param outdir directory to save data
+#' @param filename filename to save data
+#' @param dec decimal separator
 #' @export
 #'
-str_remove_all <- function(x, pattern) {
-  #stringr::str_remove_all(x, pattern = pattern)
-  gsub(pattern, "", x)
+write_csv <- function(data, outdir, filename, dec) {
+  utils::write.table(
+    data, file.path(outdir, filename),
+    quote = FALSE, row.names = FALSE, col.names = TRUE, sep = ";", dec = dec
+  )
 }
