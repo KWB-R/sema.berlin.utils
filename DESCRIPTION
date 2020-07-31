@@ -17,6 +17,7 @@ BugReports: https://github.com/KWB-R/sema.berlin.utils/issues
 Encoding: UTF-8
 LazyData: true
 Imports:
+    ggplot2,
     kwb.utils
 Remotes:
     github::kwb-r/kwb.utils

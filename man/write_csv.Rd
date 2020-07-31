@@ -13,7 +13,7 @@ write_csv(data, outdir, filename, dec)
 
 \item{filename}{filename to save data}
 
-\item{dec}{decima semperator}
+\item{dec}{decimal separator}
 }
 \description{
 write csv file, e.g. simulation result table

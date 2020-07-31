@@ -9,7 +9,7 @@ read_csv(file = NULL, dec)
 \arguments{
 \item{file}{path to csv file}
 
-\item{dec}{decima semperator}
+\item{dec}{decimal separator}
 }
 \description{
 read csv file, e.g. variable rehab strategy or simulation results to compare
