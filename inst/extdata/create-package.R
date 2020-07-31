@@ -20,8 +20,8 @@ author <- list(
 
 description <- list(
   name = package,
-  title = "Functions for Uncertainty Analysis in sema-berlin-2",
-  desc  = "This package provides the functions used for the uncertainty analysis in KWB-project sema-berlin-2."
+  title = "Utillity Functions Used in sema.berlin Packages",
+  desc  = "This package provides utility functions that are used in sema.berlin.* packages."
 )
 
 setwd(pkg_dir)
