@@ -4,9 +4,11 @@
 #'
 #' @param x matrix
 #' @param name_row name to be given to the data frame column containing the
-#'   row "coordinates". Default: \code{row}
+#'   row "coordinates". Default: \code{names(dimnames(x))[1]} unless
+#'   \code{NULL}, \code{"row"} otherwise.
 #' @param name_column name to be given to the data frame column containing the
-#'   column "coordinates". Default: \code{column}
+#'   column "coordinates". Default: \code{names(dimnames(x))[2]} unless
+#'   \code{NULL}, \code{"column"} otherwise.
 #' @param name_value name to be given to the data frame column containing the
 #'   matrix values. Default: \code{value}
 #' @return data frame with three columns: 1. row "coordinate", 2. column
@@ -14,18 +16,40 @@
 #' @importFrom kwb.utils stopIfNotMatrix
 #' @export
 #' @examples
-#' matrix_to_data_frame(matrix(1:12, nrow = 3, dimnames = list(1:3, 1:4)))
+#' m1 <- matrix(1:12, nrow = 3, dimnames = list(NULL, letters[1:4]))
+#' m2 <- matrix(1:12, nrow = 3, dimnames = list(index = NULL, letters[1:4]))
+#' m3 <- matrix(1:12, nrow = 3, dimnames = list(NULL, letter = letters[1:4]))
+#'
+#' matrix_to_data_frame(x = m1)
+#' matrix_to_data_frame(x = m2)
+#' matrix_to_data_frame(x = m3)
+#' matrix_to_data_frame(x = m3, "myrow", "mycol", "myval")
 #'
 matrix_to_data_frame <- function(
-  x, name_row = "row", name_column = "column", name_value = "value"
+  x, name_row = NULL, name_column = NULL, name_value = "value"
 )
 {
+  #kwb.utils::assignArgumentDefaults(matrix_to_data_frame)
   kwb.utils::stopIfNotMatrix(x)
+
+  # Shortcut
+  default <- function(x, d) if (is.null(x) || all(x == "")) d else x
+
+  dn <- dimnames(x)
+  dnn <- names(dn)
+
+  # Use dimension name as column name in result data frame or default
+  name_row <- default(name_row, default(dnn[1L], "row"))
+  name_col <- default(name_column, default(dnn[2], "column"))
+
+  # Provide defaults for column names and row names
+  row_names <- default(dn[[1L]], seq_len(nrow(x)))
+  col_names <- default(dn[[2L]], seq_len(ncol(x)))
 
   # Prepare list of arguments to data.frame()
   args <- list()
-  args[[name_column]] <- rep(colnames(x), each = nrow(x))
-  args[[name_row]] <- rownames(x)
+  args[[name_row]] <- row_names
+  args[[name_col]] <- rep(col_names, each = nrow(x))
   args[[name_value]] <- `attributes<-`(x, NULL) # remove attributes
 
   do.call(data.frame, c(args, list(stringsAsFactors = FALSE)))
