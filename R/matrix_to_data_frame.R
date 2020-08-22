@@ -11,6 +11,8 @@
 #'   \code{NULL}, \code{"column"} otherwise.
 #' @param name_value name to be given to the data frame column containing the
 #'   matrix values. Default: \code{value}
+#' @param row_first if \code{TRUE} (the default), the "row column" will come
+#'   first, else the "column column".
 #' @return data frame with three columns: 1. row "coordinate", 2. column
 #'   "coordinate", 3. value
 #' @importFrom kwb.utils stopIfNotMatrix
@@ -21,12 +23,13 @@
 #' m3 <- matrix(1:12, nrow = 3, dimnames = list(NULL, letter = letters[1:4]))
 #'
 #' matrix_to_data_frame(x = m1)
+#' matrix_to_data_frame(x = m1, row_first = FALSE)
 #' matrix_to_data_frame(x = m2)
 #' matrix_to_data_frame(x = m3)
 #' matrix_to_data_frame(x = m3, "myrow", "mycol", "myval")
 #'
 matrix_to_data_frame <- function(
-  x, name_row = NULL, name_column = NULL, name_value = "value"
+  x, name_row = NULL, name_column = NULL, name_value = "value", row_first = TRUE
 )
 {
   #kwb.utils::assignArgumentDefaults(matrix_to_data_frame)
@@ -48,9 +51,20 @@ matrix_to_data_frame <- function(
 
   # Prepare list of arguments to data.frame()
   args <- list()
-  args[[name_row]] <- row_names
-  args[[name_col]] <- rep(col_names, each = nrow(x))
-  args[[name_value]] <- `attributes<-`(x, NULL) # remove attributes
+
+  if (row_first) {
+
+    args[[name_row]] <- rep(row_names, each = ncol(x))
+    args[[name_col]] <- col_names
+
+  } else {
+
+    args[[name_col]] <- rep(col_names, each = nrow(x))
+    args[[name_row]] <- row_names
+  }
+
+  # Remove attributes
+  args[[name_value]] <- `attributes<-`(if (row_first) t(x) else x, NULL)
 
   do.call(data.frame, c(args, list(stringsAsFactors = FALSE)))
 }

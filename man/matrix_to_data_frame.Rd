@@ -8,7 +8,8 @@ matrix_to_data_frame(
   x,
   name_row = NULL,
   name_column = NULL,
-  name_value = "value"
+  name_value = "value",
+  row_first = TRUE
 )
 }
 \arguments{
@@ -24,6 +25,9 @@ column "coordinates". Default: \code{names(dimnames(x))[2]} unless
 
 \item{name_value}{name to be given to the data frame column containing the
 matrix values. Default: \code{value}}
+
+\item{row_first}{if \code{TRUE} (the default), the "row column" will come
+first, else the "column column".}
 }
 \value{
 data frame with three columns: 1. row "coordinate", 2. column
@@ -38,6 +42,7 @@ m2 <- matrix(1:12, nrow = 3, dimnames = list(index = NULL, letters[1:4]))
 m3 <- matrix(1:12, nrow = 3, dimnames = list(NULL, letter = letters[1:4]))
 
 matrix_to_data_frame(x = m1)
+matrix_to_data_frame(x = m1, row_first = FALSE)
 matrix_to_data_frame(x = m2)
 matrix_to_data_frame(x = m3)
 matrix_to_data_frame(x = m3, "myrow", "mycol", "myval")
