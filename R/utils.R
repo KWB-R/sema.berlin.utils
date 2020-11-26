@@ -115,15 +115,20 @@ unique_sort_char <- function(x) {
 #'
 use_spec_chars <- function(x) {
 
-  result <- kwb.utils::multiSubstitute(x, replacements = list(
+  # For the code of the EUR character, <euro>, see
+  # https://www.gerd-riesselmann.net/webentwicklung/
+  #   utf-8-latin1-aka-iso-8859-1-und-das-euro-zeichen/
+  replacements <- list(
     "<ae>" = "\xE4",
     "<ue>" = "\xFC",
     "<UE>" = "\xDC",
     "<oe>" = "\xF6",
     "<sz>" = "\xDF",
-    "<euro>" = "\xAC",
+    "<euro>" = "\x80",
     "<nbsp>" = "\xA0"
-  ))
+  )
+
+  result <- kwb.utils::multiSubstitute(x, replacements)
 
   #browser(expr = getOption("sema.berlin.app.debug", FALSE))
 
