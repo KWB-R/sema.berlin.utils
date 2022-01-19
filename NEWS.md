@@ -1,3 +1,8 @@
+# sema.berlin.utils 0.2.0 (2021-01-19)
+
+* Add argument "six" to get_bwb_colours()
+* Encode the EUR character (hopefully) correctly in use_spec_chars()
+
 # sema.berlin.utils 0.1.0 (2020-07-31)
 
 Functions from sema.berlin.app and sema.berlin
@@ -16,6 +21,6 @@ Functions from sema.berlin.app and sema.berlin
 
 # sema.berlin.utils 0.0.0.9000
 
-* Added a `NEWS.md` file to track changes to the package.
+* Add a `NEWS.md` file to track changes to the package.
 
 * see https://style.tidyverse.org/news.html for writing a good `NEWS.md`
