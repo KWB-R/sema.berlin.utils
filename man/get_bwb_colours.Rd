@@ -4,14 +4,19 @@
 \alias{get_bwb_colours}
 \title{Get Official BWB Colours}
 \usage{
-get_bwb_colours(full_info = FALSE, simple = TRUE, conditions = NULL)
+get_bwb_colours(
+  full_info = FALSE,
+  simple = TRUE,
+  conditions = NULL,
+  six = FALSE
+)
 }
 \arguments{
 \item{full_info}{if \code{TRUE}, a data frame with columns
 \code{approx_name}, \code{red}, \code{green}, \code{blue}, \code{value}
-is returned. The column \code{approx_name} contains the "approximate name" 
+is returned. The column \code{approx_name} contains the "approximate name"
 of the colour, as found by \url{http://chir.ag/projects/name-that-color}).
-By default, this argument is set to \code{FALSE} in which case a named 
+By default, this argument is set to \code{FALSE} in which case a named
 vector containing only the "#rrggbb" strings is returned.}
 
 \item{simple}{if \code{TRUE} (the default) only the main colours with
@@ -20,12 +25,15 @@ clear names (blue, green, yellow, orange, red) are returned}
 \item{conditions}{optional. Vector of (four) condition names (best to worst)
 to be used as the names of the returned vector of (four) colour codes.
 \code{FALSE}.}
+
+\item{six}{if \code{TRUE} six colours from dark green to dark red are
+returned. The default is \code{FALSE}.}
 }
 \description{
 Get Official BWB Colours
 }
 \examples{
-# Get a colour vector 
+# Get a colour vector
 get_bwb_colours()
 
 # Plot these colours
@@ -33,5 +41,8 @@ plot_bwb_colours()
 
 # Check the decimal numbers by setting full_info to TRUE
 get_bwb_colours(full_info = TRUE)
+
+# Get six colours
+get_bwb_colours(six = TRUE)
 
 }
